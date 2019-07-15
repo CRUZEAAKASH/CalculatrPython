@@ -3,14 +3,34 @@ from tkinter import *
 window = Tk()
 window.title("Calcualator")
 
-# Get the user INpit and display it in the textbox
+# Get the user Inpit and display it in the textbox
 i = 0
 
 
+# Display the input in the textbox
 def get_variables(num):
     global i
     display.insert(i, num)
     i += 1
+
+
+# Clear all the input present in textbox
+def clear_all():
+    global i
+    display.delete(0, i)
+    print(i)
+
+
+# Clearing last character
+def undo():
+    entire_string = display.get()
+    if len(entire_string):
+        new_string = entire_string[:-1]
+        clear_all()
+        display.insert(0, new_string)
+    else:
+        clear_all()
+        display.insert(0, "Error")
 
 
 # Adding textbox
@@ -30,7 +50,7 @@ Button(window, text="7", command=lambda: get_variables(7)).grid(row=3, column=0)
 Button(window, text="8", command=lambda: get_variables(8)).grid(row=3, column=1)
 Button(window, text="9", command=lambda: get_variables(9)).grid(row=3, column=2)
 
-Button(window, text="AC").grid(row=4, column=0)
+Button(window, text="AC", command=lambda: clear_all()).grid(row=4, column=0)
 Button(window, text="0", command=lambda: get_variables(10)).grid(row=4, column=1)
 Button(window, text="=").grid(row=4, column=2)
 
@@ -44,7 +64,7 @@ Button(window, text="%").grid(row=2, column=4)
 Button(window, text="(").grid(row=3, column=4)
 Button(window, text="exp").grid(row=4, column=4)
 
-Button(window, text="<-").grid(row=1, column=5)
+Button(window, text="<-", command=lambda: undo()).grid(row=1, column=5)
 Button(window, text="x!").grid(row=2, column=5)
 Button(window, text=")").grid(row=3, column=5)
 Button(window, text="^2").grid(row=4, column=5)
