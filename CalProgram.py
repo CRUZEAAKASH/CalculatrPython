@@ -1,3 +1,4 @@
+import parser
 from tkinter import *
 
 window = Tk()
@@ -40,6 +41,19 @@ def operator(opr):
     display.insert(i, opr)
 
 
+# Doing Calculations
+def calculate():
+    entire_string = display.get()
+    try:
+        a = parser.expr(entire_string).compile()
+        result = eval(a)
+        clear_all()
+        display.insert(0, result)
+    except Exception:
+        clear_all()
+        display.insert(0, "Error")
+
+
 # Adding textbox
 display = Entry(window)
 display.grid(row=0, columnspan=6, sticky=W + E)
@@ -59,7 +73,7 @@ Button(window, text="9", command=lambda: get_variables(9)).grid(row=3, column=2)
 
 Button(window, text="AC", command=lambda: clear_all()).grid(row=4, column=0)
 Button(window, text="0", command=lambda: get_variables(0)).grid(row=4, column=1)
-Button(window, text="=").grid(row=4, column=2)
+Button(window, text="=", command=lambda: calculate()).grid(row=4, column=2)
 
 Button(window, text="+", command=lambda: operator("+")).grid(row=1, column=3)
 Button(window, text="-", command=lambda: operator("-")).grid(row=2, column=3)
